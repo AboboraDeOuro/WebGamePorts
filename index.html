@@ -3,14 +3,16 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Arcade de Jogos - Index</title>
+    <title>Web Game Ports - Hub</title>
     <style>
         :root {
-            --bg-color: #0d0d12;
-            --card-bg: #1a1a24;
-            --primary-color: #9d4edd;
-            --hover-color: #c77dff;
+            --bg-color: #0b0b0f;
+            --card-bg: #14141d;
+            --primary-glow: #9d4edd;
+            --primary-hover: #c77dff;
             --text-color: #e0e0e0;
+            --text-muted: #888;
+            --border-color: #2a2a3a;
         }
 
         * {
@@ -23,71 +25,101 @@
         body {
             background-color: var(--bg-color);
             color: var(--text-color);
-            padding: 20px;
+            padding: 40px 20px;
             display: flex;
             flex-direction: column;
             align-items: center;
+            min-height: 100vh;
+        }
+
+        /* Cabeçalho */
+        header {
+            text-align: center;
+            margin-bottom: 40px;
+            width: 100%;
         }
 
         h1 {
-            font-size: 2.5rem;
-            margin-bottom: 20px;
-            text-align: center;
+            font-size: 3rem;
+            font-weight: 800;
+            margin-bottom: 10px;
             text-transform: uppercase;
-            letter-spacing: 2px;
+            letter-spacing: 3px;
             color: #fff;
-            text-shadow: 0 0 10px var(--primary-color), 0 0 20px var(--primary-color);
+            text-shadow: 0 0 15px var(--primary-glow), 0 0 30px var(--primary-glow);
+        }
+
+        .subtitle {
+            color: var(--text-muted);
+            font-size: 1.1rem;
+            margin-bottom: 30px;
         }
 
         /* Barra de Pesquisa */
         .search-container {
             width: 100%;
             max-width: 600px;
-            margin-bottom: 30px;
+            position: relative;
+            margin: 0 auto;
+        }
+
+        .search-container span {
+            position: absolute;
+            left: 20px;
+            top: 50%;
+            transform: translateY(-50%);
+            color: var(--text-muted);
+            font-size: 1.2rem;
         }
 
         input[type="text"] {
             width: 100%;
-            padding: 15px 20px;
-            border-radius: 30px;
-            border: 2px solid var(--primary-color);
+            padding: 18px 20px 18px 50px;
+            border-radius: 50px;
+            border: 2px solid var(--border-color);
             background-color: var(--card-bg);
             color: #fff;
             font-size: 1.1rem;
             outline: none;
             transition: all 0.3s ease;
-            box-shadow: 0 0 10px rgba(157, 78, 221, 0.2);
+            box-shadow: 0 0 15px rgba(0, 0, 0, 0.5);
         }
 
         input[type="text"]:focus {
-            box-shadow: 0 0 20px rgba(157, 78, 221, 0.6);
-            background-color: #22222e;
+            border-color: var(--primary-glow);
+            box-shadow: 0 0 25px rgba(157, 78, 221, 0.4);
+            background-color: #1a1a24;
+        }
+
+        input[type="text"]::placeholder {
+            color: var(--text-muted);
         }
 
         /* Grid de Jogos */
         .games-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
-            gap: 20px;
+            grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+            gap: 25px;
             width: 100%;
             max-width: 1200px;
+            margin-top: 20px;
         }
 
-        /* Cartão do Jogo */
+        /* Card do Jogo */
         .game-card {
             background-color: var(--card-bg);
-            border-radius: 12px;
-            padding: 25px 15px;
+            border-radius: 16px;
+            padding: 30px 15px;
             text-align: center;
             text-decoration: none;
             color: var(--text-color);
-            border: 2px solid #333;
-            transition: all 0.3s ease;
+            border: 1px solid var(--border-color);
+            transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
             display: flex;
             flex-direction: column;
             justify-content: center;
             align-items: center;
-            min-height: 120px;
+            min-height: 160px;
             position: relative;
             overflow: hidden;
         }
@@ -96,132 +128,147 @@
             content: '';
             position: absolute;
             top: 0; left: 0; width: 100%; height: 100%;
-            background: linear-gradient(45deg, transparent, rgba(157, 78, 221, 0.1), transparent);
-            transform: translateX(-100%);
-            transition: transform 0.5s ease;
+            background: radial-gradient(circle at center, rgba(157, 78, 221, 0.15) 0%, transparent 70%);
+            opacity: 0;
+            transition: opacity 0.3s ease;
         }
 
         .game-card:hover {
-            border-color: var(--primary-color);
-            transform: translateY(-5px);
-            box-shadow: 0 8px 25px rgba(157, 78, 221, 0.4);
+            transform: translateY(-8px) scale(1.02);
+            border-color: var(--primary-glow);
+            box-shadow: 0 10px 30px rgba(157, 78, 221, 0.3);
             color: #fff;
         }
 
         .game-card:hover::before {
-            transform: translateX(100%);
-        }
-
-        .game-title {
-            font-size: 1.2rem;
-            font-weight: bold;
-            z-index: 1;
+            opacity: 1;
         }
 
         .game-icon {
-            font-size: 2rem;
-            margin-bottom: 10px;
+            font-size: 3rem;
+            margin-bottom: 15px;
             z-index: 1;
+            filter: drop-shadow(0 0 8px rgba(157, 78, 221, 0.5));
+        }
+
+        .game-title {
+            font-size: 1rem;
+            font-weight: 600;
+            z-index: 1;
+            line-height: 1.4;
         }
 
         /* Mensagem de "Nenhum jogo encontrado" */
         #no-results {
             display: none;
-            color: #888;
+            color: var(--text-muted);
             font-size: 1.2rem;
-            margin-top: 20px;
+            margin-top: 40px;
+            text-align: center;
         }
 
         /* Scrollbar customizada */
         ::-webkit-scrollbar { width: 10px; }
         ::-webkit-scrollbar-track { background: var(--bg-color); }
-        ::-webkit-scrollbar-thumb { background: var(--primary-color); border-radius: 5px; }
-        ::-webkit-scrollbar-thumb:hover { background: var(--hover-color); }
+        ::-webkit-scrollbar-thumb { background: var(--primary-glow); border-radius: 5px; }
+        ::-webkit-scrollbar-thumb:hover { background: var(--primary-hover); }
+
+        /* Responsividade */
+        @media (max-width: 600px) {
+            h1 { font-size: 2rem; }
+            .games-grid { grid-template-columns: repeat(auto-fill, minmax(150px, 1fr)); gap: 15px; }
+            .game-card { padding: 20px 10px; min-height: 140px; }
+            .game-icon { font-size: 2.2rem; }
+        }
     </style>
 </head>
 <body>
 
-    <h1>🎮 Game Hub</h1>
-
-    <div class="search-container">
-        <input type="text" id="searchInput" placeholder="🔍 Pesquisar jogo...">
-    </div>
+    <header>
+        <h1>🎮 Web Game Ports</h1>
+        <p class="subtitle">Sua coleção de clássicos e indies para jogar no navegador</p>
+        <div class="search-container">
+            <span>🔍</span>
+            <input type="text" id="searchInput" placeholder="Pesquisar jogo...">
+        </div>
+    </header>
 
     <div class="games-grid" id="gamesGrid">
-        <!-- Os jogos serão inseridos aqui pelo JavaScript para ficar mais organizado -->
+        <!-- Os cards serão inseridos aqui via JavaScript -->
     </div>
     
-    <p id="no-results">Nenhum jogo encontrado com esse nome. 😢</p>
+    <p id="no-results">Nenhum jogo encontrado. Tente outro termo! 😢</p>
 
     <script>
-        // Lista de jogos (Pasta: Nome de exibição)
-        // Se precisar adicionar mais jogos, basta copiar uma linha e alterar.
+        // Lista de jogos com seus respectivos caminhos e ícones.
+        // A maioria usa 'pasta/index.html'. Exceções estão marcadas.
         const games = [
-            { folder: "amanda-the-adventurer", name: "Amanda The Adventurer" },
-            { folder: "andys-apple-farm", name: "Andy's Apple Farm" },
-            { folder: "baldi-plus", name: "Baldi's Basics Plus" },
-            { folder: "baldi-remaster", name: "Baldi Remaster" },
-            { folder: "bendy", name: "Bendy and the Ink Machine" },
-            { folder: "bergentruck", name: "Bergentruck" },
-            { folder: "bloodmoney", name: "Blood Money" },
-            { folder: "buckshot-roulette", name: "Buckshot Roulette" },
-            { folder: "class-of-09", name: "Class of '09" },
-            { folder: "cuphead", name: "Cuphead" },
-            { folder: "dead-plate", name: "Dead Plate" },
-            { folder: "deadseat", name: "Dead Seat" },
-            { folder: "deltatraveler", name: "DeltaTraveler" },
-            { folder: "donottakethiscathome", name: "Don't Take This Cat Home" },
-            { folder: "fears-to-fathom/home-alone", name: "Fears to Fathom: Home Alone" }, // Subpasta
-            { folder: "getting-over-it", name: "Getting Over It" },
-            { folder: "happy-sheepies", name: "Happy Sheepies" },
-            { folder: "hotline-miami", name: "Hotline Miami" },
-            { folder: "human-expenditure-program", name: "Human Expenditure Program" },
-            { folder: "jelly-drift", name: "Jelly Drift" },
-            { folder: "karlson", name: "Karlson" },
-            { folder: "kindergarten", name: "Kindergarten" },
-            { folder: "lacysflashgames", name: "Lacy's Flash Games" },
-            { folder: "milkman-karlson", name: "Milkman Karlson" },
-            { folder: "minesweeperplus", name: "Minesweeper Plus" },
-            { folder: "omori-fixed", name: "OMORI" },
-            { folder: "people-playground", name: "People Playground" },
-            { folder: "pizza-tower", name: "Pizza Tower" },
-            { folder: "raft", name: "Raft" },
-            { folder: "repo", name: "R.E.P.O." },
-            { folder: "schoolboy-runaway", name: "Schoolboy Runaway" },
-            { folder: "slender", name: "Slender" },
-            { folder: "sonic.exe", name: "Sonic.exe" },
-            { folder: "speed-stars", name: "Speed Stars" },
-            { folder: "tattletail", name: "Tattletail" },
-            { folder: "thats-not-my-neighbor", name: "That's Not My Neighbor" },
-            { folder: "the-man-in-the-window", name: "The Man in the Window" },
-            { folder: "ultrakill", name: "ULTRAKILL" },
-            { folder: "undertale-yellow", name: "Undertale Yellow" },
-            { folder: "web-fishing", name: "Web Fishing" },
-            { folder: "witch-heart", name: "Witch's Heart" },
-            { folder: "yandere-simulator", name: "Yandere Simulator" },
-            // Caso Yume Nikki seja um arquivo solto (yume-nikki.html) e não uma pasta, mude o final da linha abaixo para: { folder: "yume-nikki.html", name: "Yume Nikki" }
-            { folder: "yume-nikki", name: "Yume Nikki" }
+            { name: "Amanda The Adventurer", path: "amanda-the-adventurer/index.html", icon: "📼" },
+            { name: "Andy's Apple Farm", path: "andys-apple-farm/index.html", icon: "🍎" },
+            { name: "Baldi's Basics Plus", path: "baldi-plus/index.html", icon: "📏" },
+            { name: "Baldi Remaster", path: "baldi-remaster/index.html", icon: "📐" },
+            { name: "Bendy and the Ink Machine", path: "bendy/index.html", icon: "🎨" },
+            // Bergentruck usa um nome de arquivo específico
+            { name: "Bergentruck", path: "bergentruck/BERGENTRUCK_201X.html", icon: "🚚" },
+            { name: "Blood Money", path: "bloodmoney/index.html", icon: "🩸" },
+            { name: "Buckshot Roulette", path: "buckshot-roulette/index.html", icon: "🔫" },
+            { name: "Class of '09", path: "class-of-09/index.html", icon: "🎓" },
+            { name: "Cuphead", path: "cuphead/index.html", icon: "☕" },
+            { name: "Dead Plate", path: "dead-plate/index.html", icon: "🍽️" },
+            { name: "Dead Seat", path: "deadseat/index.html", icon: "💺" },
+            { name: "DeltaTraveler", path: "deltatraveler/index.html", icon: "⚔️" },
+            { name: "Don't Take This Cat Home", path: "donottakethiscathome/index.html", icon: "🐱" },
+            // Fears to Fathom está em uma subpasta
+            { name: "Fears to Fathom: Home Alone", path: "fears-to-fathom/home-alone/index.html", icon: "🏠" },
+            { name: "Getting Over It", path: "getting-over-it/index.html", icon: "🔨" },
+            { name: "Happy Sheepies", path: "happy-sheepies/index.html", icon: "🐑" },
+            { name: "Hotline Miami", path: "hotline-miami/index.html", icon: "🕶️" },
+            { name: "Human Expenditure Program", path: "human-expenditure-program/index.html", icon: "💼" },
+            { name: "Jelly Drift", path: "jelly-drift/index.html", icon: "🍮" },
+            { name: "Karlson", path: "karlson/index.html", icon: "🥛" },
+            { name: "Kindergarten", path: "kindergarten/index.html", icon: "🧸" },
+            { name: "Lacy's Flash Games", path: "lacysflashgames/index.html", icon: "🕹️" },
+            { name: "Milkman Karlson", path: "milkman-karlson/index.html", icon: "🍼" },
+            { name: "Minesweeper Plus", path: "minesweeperplus/index.html", icon: "💣" },
+            { name: "OMORI", path: "omori-fixed/index.html", icon: "🌻" },
+            { name: "People Playground", path: "people-playground/index.html", icon: "🧪" },
+            { name: "Pizza Tower", path: "pizza-tower/index.html", icon: "🍕" },
+            { name: "Raft", path: "raft/index.html", icon: "🛶" },
+            { name: "R.E.P.O.", path: "repo/index.html", icon: "🤖" },
+            { name: "Schoolboy Runaway", path: "schoolboy-runaway/index.html", icon: "🏃" },
+            { name: "Slender", path: "slender/index.html", icon: "🌲" },
+            { name: "Sonic.exe", path: "sonic.exe/index.html", icon: "💙" },
+            { name: "Speed Stars", path: "speed-stars/index.html", icon: "🏃‍♂️" },
+            { name: "Tattletail", path: "tattletail/index.html", icon: "🧸" },
+            { name: "That's Not My Neighbor", path: "thats-not-my-neighbor/index.html", icon: "🚪" },
+            { name: "The Man in the Window", path: "the-man-in-the-window/index.html", icon: "🪟" },
+            { name: "ULTRAKILL", path: "ultrakill/index.html", icon: "🔫" },
+            { name: "Undertale Yellow", path: "undertale-yellow/index.html", icon: "💛" },
+            { name: "Web Fishing", path: "web-fishing/index.html", icon: "🎣" },
+            { name: "Witch's Heart", path: "witch-heart/index.html", icon: "🧙" },
+            { name: "Yandere Simulator", path: "yandere-simulator/index.html", icon: "🔪" },
+            // Yume Nikki é um index.html na pasta raiz (conforme o print)
+            { name: "Yume Nikki", path: "yume-nikki/index.html", icon: "🌙" }
         ];
 
         const grid = document.getElementById('gamesGrid');
         const searchInput = document.getElementById('searchInput');
         const noResults = document.getElementById('no-results');
 
-        // Função para renderizar os jogos
+        // Função para renderizar os cards
         function renderGames(filter = "") {
             grid.innerHTML = '';
             let count = 0;
 
             games.forEach(game => {
-                // Verifica se o nome do jogo inclui o que foi digitado na pesquisa
+                // Filtro de busca (ignora maiúsculas/minúsculas)
                 if (game.name.toLowerCase().includes(filter.toLowerCase())) {
                     const link = document.createElement('a');
-                    // Link aponta para a pasta do jogo + /index.html
-                    link.href = `${game.folder}/index.html`;
+                    link.href = game.path; // Usa o caminho exato do objeto
                     link.className = 'game-card';
                     
                     link.innerHTML = `
-                        <div class="game-icon">🕹️</div>
+                        <div class="game-icon">${game.icon}</div>
                         <div class="game-title">${game.name}</div>
                     `;
                     
@@ -230,12 +277,8 @@
                 }
             });
 
-            // Mostra aviso se não encontrar nada
-            if (count === 0) {
-                noResults.style.display = 'block';
-            } else {
-                noResults.style.display = 'none';
-            }
+            // Mostra ou esconde a mensagem de "nada encontrado"
+            noResults.style.display = count === 0 ? 'block' : 'none';
         }
 
         // Evento de digitar na barra de pesquisa
@@ -243,7 +286,7 @@
             renderGames(e.target.value);
         });
 
-        // Renderiza a lista inicial ao carregar a página
+        // Renderiza a lista completa ao carregar a página
         renderGames();
     </script>
 </body>
