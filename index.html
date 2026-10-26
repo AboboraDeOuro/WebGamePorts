@@ -1,0 +1,270 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Indie Web Arcade</title>
+    <style>
+        :root {
+            --bg-color: #0d0e15;
+            --card-bg: #161824;
+            --text-color: #e2e8f0;
+            --primary: #a855f7;
+            --primary-glow: rgba(168, 85, 247, 0.4);
+            --secondary: #22c55e;
+            --secondary-glow: rgba(34, 197, 94, 0.3);
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            background-color: var(--bg-color);
+            color: var(--text-color);
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            padding: 2rem 1rem;
+            min-height: 100vh;
+        }
+
+        header {
+            text-align: center;
+            margin-bottom: 3rem;
+        }
+
+        header h1 {
+            font-size: 2.5rem;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            color: #fff;
+            text-shadow: 0 0 10px var(--primary-glow), 0 0 20px var(--primary-glow);
+            margin-bottom: 0.5rem;
+        }
+
+        header p {
+            color: #94a3b8;
+            font-size: 1rem;
+        }
+
+        .search-container {
+            max-width: 500px;
+            margin: 0 auto 2.5rem auto;
+        }
+
+        .search-bar {
+            width: 100%;
+            padding: 0.8rem 1.2rem;
+            background-color: var(--card-bg);
+            border: 2px solid #2e324e;
+            border-radius: 8px;
+            color: #fff;
+            font-size: 1rem;
+            outline: none;
+            transition: all 0.3s ease;
+        }
+
+        .search-bar:focus {
+            border-color: var(--primary);
+            box-shadow: 0 0 15px var(--primary-glow);
+        }
+
+        .grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+            gap: 1.5rem;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .card {
+            background-color: var(--card-bg);
+            border: 1px solid #2e324e;
+            border-radius: 12px;
+            padding: 1.5rem;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            text-decoration: none;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 4px;
+            height: 100%;
+            background-color: var(--primary);
+            transform: scaleY(0);
+            transition: transform 0.3s ease;
+        }
+
+        .card:hover {
+            transform: translateY(-5px);
+            border-color: var(--primary);
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.3), 0 0 15px var(--primary-glow);
+        }
+
+        .card:hover::before {
+            transform: scaleY(1);
+        }
+
+        .card h2 {
+            font-size: 1.2rem;
+            color: #fff;
+            margin-bottom: 0.5rem;
+            text-transform: capitalize;
+        }
+
+        .card-footer {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-top: 1.5rem;
+            font-size: 0.85rem;
+        }
+
+        .status {
+            color: var(--secondary);
+            font-weight: bold;
+            display: flex;
+            align-items: center;
+            gap: 0.4rem;
+        }
+
+        .status::before {
+            content: '';
+            display: inline-block;
+            width: 8px;
+            height: 8px;
+            background-color: var(--secondary);
+            border-radius: 50%;
+            box-shadow: 0 0 8px var(--secondary-glow);
+        }
+
+        .play-btn {
+            background-color: #1e2132;
+            color: #cbd5e1;
+            padding: 0.4rem 0.8rem;
+            border-radius: 6px;
+            font-weight: 500;
+            transition: background 0.2s;
+        }
+
+        .card:hover .play-btn {
+            background-color: var(--primary);
+            color: #fff;
+        }
+
+        footer {
+            text-align: center;
+            margin-top: 4rem;
+            color: #64748b;
+            font-size: 0.9rem;
+        }
+    </style>
+</head>
+<body>
+
+    <header>
+        <h1>Indie Web Arcade</h1>
+        <p>Selecione um jogo da sua biblioteca para iniciar no navegador</p>
+    </header>
+
+    <div class="search-container">
+        <input type="text" id="search" class="search-bar" placeholder="Buscar jogo...">
+    </div>
+
+    <main class="grid" id="game-grid">
+        <!-- Lista de todos os 42 jogos formatados -->
+        <a href="./amanda-the-adventurer/" class="card" data-name="amanda the adventurer">
+            <h2>Amanda The Adventurer</h2>
+            <div class="card-footer"><span class="status">Pronto</span><span class="play-btn">Jogar</span></div>
+        </a>
+        <a href="./andys-apple-farm/" class="card" data-name="andys apple farm">
+            <h2>Andy's Apple Farm</h2>
+            <div class="card-footer"><span class="status">Pronto</span><span class="play-btn">Jogar</span></div>
+        </a>
+        <a href="./baldi-plus/" class="card" data-name="baldi plus">
+            <h2>Baldi's Basics Plus</h2>
+            <div class="card-footer"><span class="status">Pronto</span><span class="play-btn">Jogar</span></div>
+        </a>
+        <a href="./baldi-remaster/" class="card" data-name="baldi remaster">
+            <h2>Baldi's Basics Remastered</h2>
+            <div class="card-footer"><span class="status">Pronto</span><span class="play-btn">Jogar</span></div>
+        </a>
+        <a href="./bendy/" class="card" data-name="bendy">
+            <h2>Bendy</h2>
+            <div class="card-footer"><span class="status">Pronto</span><span class="play-btn">Jogar</span></div>
+        </a>
+        <a href="./bergentruck/" class="card" data-name="bergentruck">
+            <h2>Bergentrückung</h2>
+            <div class="card-footer"><span class="status">Pronto</span><span class="play-btn">Jogar</span></div>
+        </a>
+        <a href="./bloodmoney/" class="card" data-name="bloodmoney">
+            <h2>Blood Money</h2>
+            <div class="card-footer"><span class="status">Pronto</span><span class="play-btn">Jogar</span></div>
+        </a>
+        <a href="./buckshot-roulette/" class="card" data-name="buckshot roulette">
+            <h2>Buckshot Roulette</h2>
+            <div class="card-footer"><span class="status">Pronto</span><span class="play-btn">Jogar</span></div>
+        </a>
+        <a href="./class-of-09/" class="card" data-name="class of 09">
+            <h2>Class of '09</h2>
+            <div class="card-footer"><span class="status">Pronto</span><span class="play-btn">Jogar</span></div>
+        </a>
+        <a href="./cuphead/" class="card" data-name="cuphead">
+            <h2>Cuphead</h2>
+            <div class="card-footer"><span class="status">Pronto</span><span class="play-btn">Jogar</span></div>
+        </a>
+        <a href="./dead-plate/" class="card" data-name="dead plate">
+            <h2>Dead Plate</h2>
+            <div class="card-footer"><span class="status">Pronto</span><span class="play-btn">Jogar</span></div>
+        </a>
+        <a href="./deadseat/" class="card" data-name="deadseat">
+            <h2>Deadseat</h2>
+            <div class="card-footer"><span class="status">Pronto</span><span class="play-btn">Jogar</span></div>
+        </a>
+        <a href="./deltatraveler/" class="card" data-name="deltatraveler">
+            <h2>Deltatraveler</h2>
+            <div class="card-footer"><span class="status">Pronto</span><span class="play-btn">Jogar</span></div>
+        </a>
+        <a href="./donottakethiscathome/" class="card" data-name="donot take this cat home">
+            <h2>Do Not Take This Cat Home</h2>
+            <div class="card-footer"><span class="status">Pronto</span><span class="play-btn">Jogar</span></div>
+        </a>
+        <a href="./fears-to-fathom/home-alone/" class="card" data-name="fears to fathom home alone">
+            <h2>Fears to Fathom: Home Alone</h2>
+            <div class="card-footer"><span class="status">Pronto</span><span class="play-btn">Jogar</span></div>
+        </a>
+        <a href="./getting-over-it/" class="card" data-name="getting over it">
+            <h2>Getting Over It</h2>
+            <div class="card-footer"><span class="status">Pronto</span><span class="play-btn">Jogar</span></div>
+        </a>
+        <a href="./happy-sheepies/" class="card" data-name="happy sheepies">
+            <h2>Happy Sheepies</h2>
+            <div class="card-footer"><span class="status">Pronto</span><span class="play-btn">Jogar</span></div>
+        </a>
+        <a href="./hotline-miami/" class="card" data-name="hotline miami">
+            <h2>Hotline Miami</h2>
+            <div class="card-footer"><span class="status">Pronto</span><span class="play-btn">Jogar</span></div>
+        </a>
+        <a href="./human-expenditure-program/" class="card" data-name="human expenditure program">
+            <h2>Human Expenditure Program</h2>
+            <div class="card-footer"><span class="status">Pronto</span><span class="play-btn">Jogar</span></div>
+        </a>
+        <a href="./jelly-drift/" class="card" data-name="jelly drift">
+            <h2>Jelly Drift</h2>
+            <div class="card-footer"><span class="status">Pronto</span><span class="play-btn">Jogar</span></div>
+        </a>
+        <a href="./karlson/" class="card" data-name="karlson">
+            <h2>Karlson</h2>
+            <div class="card-footer"><span class="status">Pronto</span><span class="play-btn">Jogar</span></div>
+        </a>
+        <a href="./kindergarten/" class="card" data-name="kindergarten">
+            <h2>Kindergarten</h2>
